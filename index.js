@@ -38,18 +38,11 @@ const xmlBuilderOptions = {
 const builder = new XMLBuilder(xmlBuilderOptions);
 
  async function ActionsRequest(req, res) {
-    if(req.url === '/favicon.ico'){
-        res.writeHead(204);
-        res.end();
-        return;
-    }
-
     try {
         const query = url.parse(req.url, true).query;
         const data = await files.readFile(options.input, "utf-8");
         let banks = JSON.parse(data);
 
-        // Фільтрація нормальних банків
         if(query.normal === "true"){
             banks = banks.filter(bank => bank.COD_STATE === 1);
         }
